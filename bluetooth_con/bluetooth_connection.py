@@ -1,4 +1,5 @@
 from bluetooth import *
+from wifi_con import wifi_connection
 
 def start_bluetooth_con():
     server_sock=BluetoothSocket( RFCOMM )
@@ -18,14 +19,14 @@ def start_bluetooth_con():
     print ("Waiting for connection on RFCOMM channel %d" % port)
     client_sock, client_info = server_sock.accept()
     print ("Accepted connection from ", client_info)
-
-    try:
-        while True:
-            data = client_sock.recv(1024)
-            if len(data) == 0: break
-            print ("received [%s]" % data)
-    except IOError:
-        pass
+    while True:
+        try:
+            while True:
+                data = client_sock.recv(1024)
+                if len(data) == 0: break
+                print ("received [%s]" % data)
+        except IOError:
+            pass
 
     print ("disconnected")
 
